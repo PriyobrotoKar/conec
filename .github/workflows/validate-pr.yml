@@ -1,0 +1,61 @@
+name: Validate Pull Request
+on:
+  pull_request:
+    branches:
+      - develop
+
+jobs:
+  Test:
+    name: Testing the project
+    runs-on: 'ubuntu-latest'
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Ensure Docker Compose is available
+        run: docker-compose version
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          version: 9
+          run_install: false
+      - name: Installing dependencies...
+        run: pnpm install
+      - name: Copy .env.example to .env
+        run: cp ./.sample.env ./.env
+      - name: Testing...
+        run: pnpm test
+  Build:
+    name: Building the project
+    runs-on: 'ubuntu-latest'
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Ensure Docker Compose is available
+        run: docker-compose version
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          version: 9
+          run_install: false
+      - name: Installing dependencies...
+        run: pnpm install
+      - name: Copy .env.example to .env
+        run: cp ./.sample.env ./.env
+      - name: Generate database migration
+        run: |
+          docker compose up -d
+          pnpm dlx prisma migrate deploy
+          pnpm dlx prisma generate
+          pnpx @snaplet/seed sync
+      - name: Building...
+        run: pnpm build

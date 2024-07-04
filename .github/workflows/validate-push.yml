@@ -1,0 +1,27 @@
+name: Validate Push
+on:
+  push:
+    branches-ignore:
+      - 'main'
+      - 'develop'
+jobs:
+  Linting:
+    name: Linting and Formatting
+    runs-on: 'ubuntu-latest'
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          version: 9
+          run_install: false
+      - name: Installing dependencies...
+        run: pnpm install
+      - name: Linting...
+        run: pnpm lint
+      - name: Formatting...
+        run: pnpm format

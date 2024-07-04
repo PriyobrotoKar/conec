@@ -1,0 +1,52 @@
+name: Vercel Production Deployment
+permissions: write-all
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+on:
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  Deploy-Production:
+    runs-on: ubuntu-latest
+    environment:
+      name: Production
+      url: ${{steps.deployment.outputs.Production_URL}}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          version: 9
+          run_install: false
+      - name: Install Vercel CLI
+        run: pnpm install --global vercel@canary
+      - name: Pull Vercel Environment Information
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Generate prisma client
+        run: pnpm dlx prisma generate
+      - name: Generate database migration
+        run: |
+          pnpm dlx prisma migrate deploy
+          pnpx @snaplet/seed sync
+        env:
+          DATABASE_URL: ${{secrets.DATABASE_URL}}
+      - name: Build Project Artifacts
+        env:
+          DATABASE_URL: ${{secrets.DATABASE_URL}}
+        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Update website URL
+        run: |
+          curl --silent --show-error -X PATCH \
+            -H "Authorization: token ${{ secrets.GH_PAT }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            https://api.github.com/repos/${{ github.repository }} \
+            -d '{"homepage": "https://${{vars.DEPLOYMENT_URL}}"}'
+      - name: Deploy Project Artifacts to Vercel
+        id: deployment
+        run: |
+          vercel deploy --prebuilt --prod  --token=${{ secrets.VERCEL_TOKEN }} > deployment-url.txt
+          vercel alias --token=${{ secrets.VERCEL_TOKEN }} set `cat deployment-url.txt` ${{vars.DEPLOYMENT_URL}}
+          echo "Production_URL=https://${{vars.DEPLOYMENT_URL}}" >> "$GITHUB_OUTPUT"

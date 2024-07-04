@@ -1,0 +1,15 @@
+name: app-name
+
+services:
+  db:
+    container_name: pgsql
+    image: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - volume_database:/var/lib/postgresql/data
+volumes:
+  volume_database:
