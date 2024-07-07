@@ -1,6 +1,68 @@
 [
   {
     "schemaName": "public",
+    "tableName": "Profile",
+    "predictions": [
+      {
+        "input": "public profile avatar",
+        "column": "avatar",
+        "shape": "INTERNET_AVATAR",
+        "confidence": 0.9889159202575684,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public profile bio",
+        "column": "bio",
+        "shape": "PERSON_BIO",
+        "confidence": 0.987476646900177,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public profile cover_pic",
+        "column": "cover_pic",
+        "shape": "INTERNET_AVATAR",
+        "confidence": 0.5571096539497375,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public profile firstname",
+        "column": "firstname",
+        "shape": "PERSON_FIRST_NAME",
+        "confidence": 0.9950215816497803,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public profile id",
+        "column": "id",
+        "shape": "UUID",
+        "confidence": 0.9981722831726074,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public profile lastname",
+        "column": "lastname",
+        "shape": "PERSON_LAST_NAME",
+        "confidence": 0.9580298662185669,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public profile location",
+        "column": "location",
+        "shape": "LOCATION_BUILDING_NUMBER",
+        "confidence": 0.9186609387397766,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      }
+    ]
+  },
+  {
+    "schemaName": "public",
     "tableName": "User",
     "predictions": [
       {
@@ -8,6 +70,30 @@
         "column": "email",
         "shape": "EMAIL",
         "confidence": 0.99404376745224,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public user id",
+        "column": "id",
+        "shape": "UUID",
+        "confidence": 0.9964122176170349,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public user password",
+        "column": "password",
+        "shape": "PASSWORD",
+        "confidence": 0.9340711236000061,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public user username",
+        "column": "username",
+        "shape": "USERNAME",
+        "confidence": 0.9716823697090149,
         "context": "GENERAL",
         "confidenceContext": 0
       }

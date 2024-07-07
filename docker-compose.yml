@@ -1,5 +1,3 @@
-name: app-name
-
 services:
   db:
     container_name: pgsql
@@ -11,5 +9,11 @@ services:
       - POSTGRES_PASSWORD=password
     volumes:
       - volume_database:/var/lib/postgresql/data
+    networks:
+      - dev
+
 volumes:
   volume_database:
+
+networks:
+  dev:
