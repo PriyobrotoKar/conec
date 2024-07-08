@@ -1,11 +1,11 @@
+import { ApiError } from '@/lib/apiError'
+import { ApiResponse } from '@/lib/apiResponse'
+import { asyncHandler } from '@/lib/asyncHandler'
 import prisma from '@/lib/prisma'
 import { NextResponse } from 'next/server'
 
-export async function GET(
-  req: Request,
-  { params }: { params: { username: string } }
-) {
-  try {
+export const GET = asyncHandler(
+  async (req: Request, { params }: { params: { username: string } }) => {
     const user = await prisma.user.findUnique({
       where: {
         username: params.username
@@ -13,29 +13,9 @@ export async function GET(
     })
 
     if (!user) {
-      return NextResponse.json(
-        {
-          code: 404,
-          status: 'error',
-          data: null,
-          message: 'user does not exist'
-        },
-        {
-          status: 404
-        }
-      )
+      throw new ApiError('user does not exist', 404)
     }
 
-    return NextResponse.json(
-      {
-        code: 200,
-        status: 'success',
-        data: user,
-        message: null
-      },
-      { status: 200 }
-    )
-  } catch (error) {
-    console.log(error)
+    return NextResponse.json(new ApiResponse(user, 200), { status: 200 })
   }
-}
+)
