@@ -1,5 +1,13 @@
 import { testApiHandler } from 'next-test-api-route-handler'
-import { describe, beforeEach, expect, it, afterEach, beforeAll } from 'vitest'
+import {
+  describe,
+  beforeEach,
+  expect,
+  it,
+  afterEach,
+  beforeAll,
+  vi
+} from 'vitest'
 import * as appHandler from './route'
 import prisma from '@/lib/prisma'
 import bcrypt from 'bcrypt'
@@ -7,6 +15,8 @@ import { User } from '@prisma/client'
 
 describe('user tests', () => {
   let user: User
+  vi.mock('@/auth')
+
   beforeAll(async () => {
     await prisma.user.deleteMany()
   })

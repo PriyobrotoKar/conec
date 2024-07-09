@@ -7,3 +7,9 @@ export class ApiError extends Error {
     this.status = 'error'
   }
 }
+
+export class AuthError extends ApiError {
+  constructor(message?: string) {
+    super(message ?? 'Unauthorized', 401)
+  }
+}

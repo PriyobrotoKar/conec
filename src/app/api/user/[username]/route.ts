@@ -1,21 +1,11 @@
-import { ApiError } from '@/lib/apiError'
 import { ApiResponse } from '@/lib/apiResponse'
-import { asyncHandler } from '@/lib/asyncHandler'
-import prisma from '@/lib/prisma'
+import { AsyncHandler } from '@/lib/asyncHandler'
 import { NextResponse } from 'next/server'
+import { getUserbyUsername } from '@/services/user.service'
 
-export const GET = asyncHandler(
+export const GET = AsyncHandler.authenticated(
   async (req: Request, { params }: { params: { username: string } }) => {
-    const user = await prisma.user.findUnique({
-      where: {
-        username: params.username
-      }
-    })
-
-    if (!user) {
-      throw new ApiError('user does not exist', 404)
-    }
-
+    const user = await getUserbyUsername(params.username)
     return NextResponse.json(new ApiResponse(user, 200), { status: 200 })
   }
 )
