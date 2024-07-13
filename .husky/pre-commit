@@ -1,3 +1,1 @@
-pnpm lint-staged
-pnpm test
-docker compose up -d && pnpm run build && docker compose down
+pnpm lint-staged && pnpm test && docker compose up -d && pnpm run build && docker compose down

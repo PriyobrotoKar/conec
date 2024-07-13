@@ -5,15 +5,23 @@
  * Learn more about the Seed Client by following our guide: https://docs.snaplet.dev/seed/getting-started
  */
 import { createSeedClient } from '@snaplet/seed'
+import bcrypt from 'bcrypt'
 
 const main = async () => {
-  const seed = await createSeedClient()
+  const seed = await createSeedClient({
+    models: {
+      user: {
+        data: {
+          password: (ctx) => bcrypt.hashSync(ctx.seed, 10)
+        }
+      }
+    }
+  })
 
   // Truncate all tables in the database
   await seed.$resetDatabase()
 
-  // Seed the database with 10 user
-  await seed.user((x) => x(10))
+  await seed.profile((x) => x(10))
 
   // Type completion not working? You might want to reload your TypeScript Server to pick up the changes
 

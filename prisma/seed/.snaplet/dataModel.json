@@ -1,5 +1,150 @@
 {
   "models": {
+    "Profile": {
+      "id": "public.Profile",
+      "schemaName": "public",
+      "tableName": "Profile",
+      "fields": [
+        {
+          "id": "public.Profile.id",
+          "name": "id",
+          "columnName": "id",
+          "type": "text",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": true,
+          "maxLength": null
+        },
+        {
+          "id": "public.Profile.firstname",
+          "name": "firstname",
+          "columnName": "firstname",
+          "type": "text",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "id": "public.Profile.lastname",
+          "name": "lastname",
+          "columnName": "lastname",
+          "type": "text",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "id": "public.Profile.bio",
+          "name": "bio",
+          "columnName": "bio",
+          "type": "text",
+          "isRequired": false,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "id": "public.Profile.avatar",
+          "name": "avatar",
+          "columnName": "avatar",
+          "type": "text",
+          "isRequired": false,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "id": "public.Profile.cover_pic",
+          "name": "cover_pic",
+          "columnName": "cover_pic",
+          "type": "text",
+          "isRequired": false,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "id": "public.Profile.location",
+          "name": "location",
+          "columnName": "location",
+          "type": "text",
+          "isRequired": false,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "id": "public.Profile.userId",
+          "name": "userId",
+          "columnName": "userId",
+          "type": "text",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "name": "User",
+          "type": "User",
+          "isRequired": true,
+          "kind": "object",
+          "relationName": "ProfileToUser",
+          "relationFromFields": ["userId"],
+          "relationToFields": ["id"],
+          "isList": false,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        }
+      ],
+      "uniqueConstraints": [
+        {
+          "name": "Profile_pkey",
+          "fields": ["id"],
+          "nullNotDistinct": false
+        },
+        {
+          "name": "Profile_userId_key",
+          "fields": ["userId"],
+          "nullNotDistinct": false
+        }
+      ]
+    },
     "User": {
       "id": "public.User",
       "schemaName": "public",
@@ -9,17 +154,13 @@
           "id": "public.User.id",
           "name": "id",
           "columnName": "id",
-          "type": "int4",
+          "type": "text",
           "isRequired": true,
           "kind": "scalar",
           "isList": false,
           "isGenerated": false,
-          "sequence": {
-            "identifier": "\"public\".\"User_id_seq\"",
-            "increment": 1,
-            "start": 1
-          },
-          "hasDefaultValue": true,
+          "sequence": false,
+          "hasDefaultValue": false,
           "isId": true,
           "maxLength": null
         },
@@ -36,6 +177,76 @@
           "hasDefaultValue": false,
           "isId": false,
           "maxLength": null
+        },
+        {
+          "id": "public.User.createdAt",
+          "name": "createdAt",
+          "columnName": "createdAt",
+          "type": "timestamp",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": true,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "id": "public.User.password",
+          "name": "password",
+          "columnName": "password",
+          "type": "text",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "id": "public.User.updatedAt",
+          "name": "updatedAt",
+          "columnName": "updatedAt",
+          "type": "timestamp",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": true,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "id": "public.User.username",
+          "name": "username",
+          "columnName": "username",
+          "type": "text",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "name": "Profile",
+          "type": "Profile",
+          "isRequired": false,
+          "kind": "object",
+          "relationName": "ProfileToUser",
+          "relationFromFields": [],
+          "relationToFields": [],
+          "isList": true,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
         }
       ],
       "uniqueConstraints": [
@@ -47,6 +258,11 @@
         {
           "name": "User_email_key",
           "fields": ["email"],
+          "nullNotDistinct": false
+        },
+        {
+          "name": "User_username_key",
+          "fields": ["username"],
           "nullNotDistinct": false
         }
       ]
