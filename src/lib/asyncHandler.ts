@@ -11,7 +11,7 @@ type RequestHandler<TParams extends Record<any, string>, T> = (
 type FnType<TParams, T = null> = (
   req: NextRequest,
   context: { params: TParams },
-  result: T
+  data: T
 ) => Promise<NextResponse<any>>
 
 export class AsyncHandler<TParams extends Record<any, string>, T> {
@@ -31,8 +31,8 @@ export class AsyncHandler<TParams extends Record<any, string>, T> {
     context: { params: TParams }
   ) {
     try {
-      const result = this.middleware ? await this.middleware() : null
-      const args = [request, context, result].filter((arg) => arg !== null)
+      const data = this.middleware ? await this.middleware() : null
+      const args = [request, context, data].filter((arg) => arg !== null)
       return await this.fn(...(args as [NextRequest, { params: TParams }, T]))
     } catch (error: any) {
       process.env.NODE_ENV === 'development' && console.log(error)
@@ -59,13 +59,15 @@ export class AsyncHandler<TParams extends Record<any, string>, T> {
     )
   }
 
-  static authenticated<U extends Record<any, string>>(fn: FnType<U, Session>) {
+  static authenticated<U extends Record<any, string>>(
+    fn: FnType<U, { currentUser: Session }>
+  ) {
     new AsyncHandler(fn, async () => {
       const currentUser = await auth()
       if (!currentUser) {
         throw new AuthError()
       }
-      return currentUser
+      return { currentUser }
     })
     return AsyncHandler.instance
   }
