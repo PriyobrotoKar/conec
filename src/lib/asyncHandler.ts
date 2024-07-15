@@ -1,6 +1,5 @@
 import { auth } from '@/auth'
-import { AuthError } from '@/lib/apiError'
-import { Prisma } from '@prisma/client'
+import { ApiError, AuthError } from '@/lib/apiError'
 import { Session } from 'next-auth'
 import { NextRequest, NextResponse } from 'next/server'
 
@@ -42,13 +41,12 @@ export class AsyncHandler<TParams extends Record<any, string>, T> {
   }
 
   private createErrorResponse(error: any) {
-    if (error instanceof Prisma.PrismaClientKnownRequestError) {
-      delete (error as Partial<Prisma.PrismaClientKnownRequestError>).code
-      delete (error as Partial<Prisma.PrismaClientKnownRequestError>).message
+    if (!(error instanceof ApiError)) {
+      delete error.code
+      delete error.message
     }
     const statusCode = error.code || 500
-    const message =
-      error.message !== '' ? error.message : 'Internal Server Error'
+    const message = error.message || 'Internal Server Error'
     const stack = process.env.NODE_ENV !== 'production' ? error.stack : ''
     return NextResponse.json(
       {
