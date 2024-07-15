@@ -1,6 +1,8 @@
 import type { Config } from 'tailwindcss'
+import defaultTheme from 'tailwindcss/defaultTheme'
 
 const config = {
+  darkMode: 'class',
   content: [
     './pages/**/*.{ts,tsx}',
     './components/**/*.{ts,tsx}',
@@ -16,7 +18,25 @@ const config = {
         '2xl': '1400px'
       }
     },
+    fontSize: {
+      xs: '0.782rem',
+      sm: '0.996rem',
+      base: '1.138rem',
+      lg: '1.20rem',
+      xl: '1.5rem',
+      '2xl': '1.625rem',
+      '3xl': '1.75rem',
+      '4xl': ['2.60rem', '2.96rem'],
+      '5xl': ['4rem', '4.5rem']
+    },
+
     extend: {
+      fontFamily: {
+        'red-hat-display': [
+          'var(--font-red-hat-display)',
+          ...defaultTheme.fontFamily.sans
+        ]
+      },
       colors: {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
@@ -65,11 +85,18 @@ const config = {
         'accordion-up': {
           from: { height: 'var(--radix-accordion-content-height)' },
           to: { height: '0' }
+        },
+        float: {
+          '0%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(10px)' },
+          '100%': { transform: 'tranlateY(0)' }
         }
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
-        'accordion-up': 'accordion-up 0.2s ease-out'
+        'accordion-up': 'accordion-up 0.2s ease-out',
+        float: 'float 5s ease-in-out infinite',
+        spin: 'spin 1.5s linear infinite'
       }
     }
   },

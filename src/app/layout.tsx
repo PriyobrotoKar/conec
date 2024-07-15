@@ -1,9 +1,14 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Red_Hat_Display } from 'next/font/google'
 import './globals.css'
 import ReactQueryProvider from '../providers/ReactQueryProvider'
+import { ThemeProvider } from '@/providers/ThemeProvider'
+import { Toaster } from '@/components/ui/sonner'
 
-const inter = Inter({ subsets: ['latin'] })
+const redHatDisplay = Red_Hat_Display({
+  subsets: ['latin'],
+  variable: '--font-red-hat-display'
+})
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -16,9 +21,14 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <ReactQueryProvider>{children}</ReactQueryProvider>
+    <html lang="en" className={`${redHatDisplay.variable}`}>
+      <body className="font-red-hat-display text-base transition-colors lg:text-2xl">
+        <ReactQueryProvider>
+          <ThemeProvider attribute="class" defaultTheme="system">
+            {children}
+          </ThemeProvider>
+          <Toaster richColors />
+        </ReactQueryProvider>
       </body>
     </html>
   )

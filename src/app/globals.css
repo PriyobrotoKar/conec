@@ -3,19 +3,34 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: 60 100% 94%;
+  --foreground: 0 0% 0%;
+
+  --primary: 46 70% 75%;
+  --primary-foreground: 90 5% 8%;
+
+  --muted-foreground: 60 16% 70%;
+
+  --border: 90 5% 8%;
+  --radius: 0.5rem;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+.dark {
+  --background: 90 10% 4%;
+  --foreground: 60 100% 94%;
+
+  --border: 60 100% 94%;
+  --radius: 0.5rem;
+}
+
+@layer base {
+  * {
+    @apply border-border;
   }
-}
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-synthesis: none;
+  body {
+    @apply bg-background leading-[initial] text-foreground;
+    font-feature-settings:
+      'rlig' 1,
+      'calt' 1;
+  }
 }
