@@ -25,7 +25,8 @@ const ClaimUrl = () => {
       userSchema.shape.username.parse(input)
       await sleep(1000)
       const result = await fetchFromApi(`/user/${input}`)
-      setIsAvailable(result.status === 'error' ? true : false)
+      const availability = result.status === 'error' ? true : false
+      setIsAvailable(availability)
       setIsLoading(false)
     } catch (error: any) {
       let errorMessage = error.message
