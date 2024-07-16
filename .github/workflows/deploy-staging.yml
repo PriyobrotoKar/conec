@@ -41,5 +41,5 @@ jobs:
         id: deployment
         run: |
           vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }} > deployment-url.txt
-          vercel alias --token=${{ secrets.VERCEL_TOKEN }} set `cat deployment-url.txt` ${{vars.Staging_URL}}
+          vercel alias --token=${{ secrets.VERCEL_TOKEN }} --scope=priyobrotos-projects set `cat deployment-url.txt` ${{vars.Staging_URL}}
           echo "Staging_URL=https://${{vars.Staging_URL}}" >> "$GITHUB_OUTPUT"

@@ -48,5 +48,4 @@ jobs:
         id: deployment
         run: |
           vercel deploy --prebuilt --prod  --token=${{ secrets.VERCEL_TOKEN }} > deployment-url.txt
-          vercel alias --token=${{ secrets.VERCEL_TOKEN }} set `cat deployment-url.txt` ${{vars.DEPLOYMENT_URL}}
           echo "Production_URL=https://${{vars.DEPLOYMENT_URL}}" >> "$GITHUB_OUTPUT"

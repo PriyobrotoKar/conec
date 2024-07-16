@@ -17,6 +17,7 @@
     "cm": "cz",
     "migrate": "prisma migrate dev",
     "postmigrate": "npx @snaplet/seed sync",
+    "postinstall": "pnpm dlx prisma generate && pnpx @snaplet/seed sync",
     "preinstall": "npx only-allow pnpm",
     "prepare": "husky"
   },
