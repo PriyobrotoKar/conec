@@ -2,6 +2,7 @@ import { auth } from '@/auth'
 import { ApiError, AuthError } from '@/lib/apiError'
 import { Session } from 'next-auth'
 import { NextRequest, NextResponse } from 'next/server'
+import { ZodError } from 'zod'
 
 type RequestHandler<TParams extends Record<any, string>, T> = (
   request: NextRequest,
@@ -41,12 +42,18 @@ export class AsyncHandler<TParams extends Record<any, string>, T> {
   }
 
   private createErrorResponse(error: any) {
+    let code = error.code
+    let errMessage = error.message
     if (!(error instanceof ApiError)) {
       delete error.code
       delete error.message
     }
-    const statusCode = error.code || 500
-    const message = error.message || 'Internal Server Error'
+    if (error instanceof ZodError) {
+      code = 400
+      errMessage = error.issues[0].message
+    }
+    const statusCode = code || 500
+    const message = errMessage || 'Internal Server Error'
     const stack = process.env.NODE_ENV !== 'production' ? error.stack : ''
     return NextResponse.json(
       {
