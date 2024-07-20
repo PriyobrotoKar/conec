@@ -23,9 +23,9 @@ describe('user tests', () => {
   beforeEach(async () => {
     user = await prisma.user.create({
       data: {
-        username: 'johnDoe',
-        email: 'johnDoe@gmail.com',
-        password: bcrypt.hashSync('thisIsJohn', 10)
+        username: 'janeDoe',
+        email: 'janeDoe@gmail.com',
+        password: bcrypt.hashSync('thisIsJane', 10)
       }
     })
   })
@@ -38,7 +38,7 @@ describe('user tests', () => {
     await testApiHandler({
       appHandler,
       params: {
-        username: 'johnDoe'
+        username: 'janeDoe'
       },
       async test({ fetch }) {
         const res = await fetch({ method: 'GET' })

@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { toast } from 'sonner'
 import FeatherIcon from 'feather-icons-react'
-import { cn, sleep } from '@/lib/utils'
+import { cn } from '@/lib/utils'
 import { userSchema } from '@/entities/user'
 import { ZodError } from 'zod'
 import { fetchFromApi } from '@/lib/fetcher'
@@ -23,7 +23,6 @@ const ClaimUrl = () => {
     setIsLoading(true)
     try {
       userSchema.shape.username.parse(input)
-      await sleep(1000)
       const result = await fetchFromApi(`/user/${input}`)
       const availability = result.status === 'error'
       setIsAvailable(availability)
@@ -39,7 +38,7 @@ const ClaimUrl = () => {
   }
 
   //eslint-disable-next-line
-  const debouncedHandler = useCallback(debounce(handleOnChange, 200), [
+  const debouncedHandler = useCallback(debounce(handleOnChange, 500), [
     handleOnChange
   ])
 
@@ -75,7 +74,10 @@ const ClaimUrl = () => {
       </div>
       <div className="flex items-center gap-3 md:gap-6">
         <Button>Claim Url</Button>
-        <Link href={'/login'} className="text-xs font-medium italic md:text-lg">
+        <Link
+          href={'?login=open'}
+          className="text-xs font-medium italic md:text-lg"
+        >
           or login to begin
         </Link>
       </div>

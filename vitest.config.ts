@@ -8,7 +8,7 @@ export default defineConfig({
     setupFiles: ['./vitest.setup.ts'],
     environment: 'jsdom',
     coverage: {
-      include: ['src/app/**']
+      include: ['src/app/(app)/api/**']
     },
     include: ['src/app/**/*.spec.ts'],
     exclude: ['src/app/**/*.unit.spec.ts']

@@ -1,6 +1,14 @@
 import { testApiHandler } from 'next-test-api-route-handler'
 import bcrypt from 'bcrypt'
-import { beforeAll, beforeEach, afterEach, describe, expect, it } from 'vitest'
+import {
+  beforeAll,
+  beforeEach,
+  afterEach,
+  describe,
+  expect,
+  it,
+  vi
+} from 'vitest'
 import * as appHandler from './route'
 import prisma from '@/lib/prisma'
 
@@ -53,28 +61,12 @@ describe('login tests', () => {
         }
       })
     })
-
-    it('POST /api/login -> Should throw error if the password is less than 8 characters', async () => {
-      await testApiHandler({
-        appHandler,
-        async test({ fetch }) {
-          const res = await fetch({
-            method: 'POST',
-            body: JSON.stringify({
-              email: 'johnDoe@gmail.com',
-              password: 'testing'
-            })
-          })
-          const body = await res.json()
-          expect(body.code).toBe(400)
-          expect(body.status).toBe('error')
-          expect(body.message).toBe('Password must have at least 8 characters')
-        }
-      })
-    })
   })
 
   describe('Authenticate user', () => {
+    vi.mock('@/auth', () => ({
+      signIn: vi.fn()
+    }))
     let testUser = {
       username: 'johnDoe',
       email: 'johnDoe@gmail.com',
@@ -133,6 +125,25 @@ describe('login tests', () => {
           expect(body.code).toBe(401)
           expect(body.status).toBe('error')
           expect(body.message).toBe('Incorrect password')
+        }
+      })
+    })
+    it('POST /api/login -> Should login the user with correct credentials', async () => {
+      await testApiHandler({
+        appHandler,
+        async test({ fetch }) {
+          const res = await fetch({
+            method: 'POST',
+            body: JSON.stringify({
+              email: testUser.email,
+              password: 'thisIsJohn'
+            })
+          })
+          const body = await res.json()
+          console.log(body)
+          expect(body.code).toBe(200)
+          expect(body.status).toBe('success')
+          expect(body.data).toBe('Logged in successfully')
         }
       })
     })

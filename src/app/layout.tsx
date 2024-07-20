@@ -4,6 +4,7 @@ import './globals.css'
 import ReactQueryProvider from '../providers/ReactQueryProvider'
 import { ThemeProvider } from '@/providers/ThemeProvider'
 import { Toaster } from '@/components/ui/sonner'
+import React from 'react'
 
 const redHatDisplay = Red_Hat_Display({
   subsets: ['latin'],

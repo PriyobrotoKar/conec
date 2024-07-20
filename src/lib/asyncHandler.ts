@@ -1,6 +1,7 @@
 import { auth } from '@/auth'
 import { ApiError, AuthError } from '@/lib/apiError'
 import { Session } from 'next-auth'
+import { isRedirectError } from 'next/dist/client/components/redirect'
 import { NextRequest, NextResponse } from 'next/server'
 import { ZodError } from 'zod'
 
@@ -42,11 +43,14 @@ export class AsyncHandler<TParams extends Record<any, string>, T> {
   }
 
   private createErrorResponse(error: any) {
+    if (isRedirectError(error)) {
+      throw error
+    }
     let code = error.code
     let errMessage = error.message
     if (!(error instanceof ApiError)) {
-      delete error.code
-      delete error.message
+      code = ''
+      errMessage = ''
     }
     if (error instanceof ZodError) {
       code = 400

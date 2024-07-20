@@ -1,3 +1,4 @@
+import { signIn } from '@/auth'
 import { signInSchema } from '@/entities/user'
 import { ApiError } from '@/lib/apiError'
 import prisma from '@/lib/prisma'
@@ -24,4 +25,8 @@ export const signInWithEmail = async ({
     throw new ApiError('Incorrect password', 401)
   }
   //TODO: if matches then signIn the user
+  await signIn('credentials', {
+    ...user,
+    redirect: false
+  })
 }
