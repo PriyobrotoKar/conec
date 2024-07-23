@@ -2,12 +2,11 @@
 
 import { ApiError } from '@/lib/apiError'
 import prisma from '@/lib/prisma'
+import { Prisma } from '@prisma/client'
 
-export const getUserbyUsername = async (username: string) => {
+export const getUser = async (query: Prisma.UserWhereUniqueInput) => {
   const user = await prisma.user.findUnique({
-    where: {
-      username
-    }
+    where: query
   })
 
   if (!user) {

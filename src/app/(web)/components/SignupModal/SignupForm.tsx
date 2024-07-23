@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { signInSchema } from '@/entities/user'
+import { signupSchema } from '@/entities/user'
 import { fetchFromApi } from '@/lib/fetcher'
 import { submitHanlder } from '@/lib/submitHandler'
 import React from 'react'
@@ -18,31 +18,26 @@ import { z } from 'zod'
 import { useRouter } from 'next/navigation'
 import PasswordInput from '@/components/PasswordInput'
 
-const LoginForm = () => {
+const SignupForm = () => {
   const router = useRouter()
   const { handleSubmit, formState, ...form } = useForm<
-    z.infer<typeof signInSchema>
+    z.infer<typeof signupSchema>
   >({
-    resolver: zodResolver(signInSchema),
+    resolver: zodResolver(signupSchema),
     defaultValues: {
       email: '',
-      password: ''
+      password: '',
+      confirmPassword: ''
     }
   })
 
-  const onSubmit = async ({
-    email,
-    password
-  }: z.infer<typeof signInSchema>) => {
+  const onSubmit = async ({ email }: z.infer<typeof signupSchema>) => {
     return submitHanlder(async () => {
-      const result = await fetchFromApi('/auth/login', 'POST', {
-        email,
-        password
-      })
-      if (result.status === 'error') {
-        throw new Error(result.message)
+      const result = await fetchFromApi(`/user?email=${email}`)
+      if (result.status === 'success') {
+        throw new Error('This account already exists. Try logging in instead')
       }
-      router.push('/dashboard')
+      router.push('/onboarding')
     })
   }
 
@@ -82,9 +77,22 @@ const LoginForm = () => {
                 </FormItem>
               )}
             />
+            <FormField
+              control={form.control}
+              name="confirmPassword"
+              render={({ field }) => (
+                <FormItem className="flex flex-col">
+                  <FormLabel>Confirm Password</FormLabel>
+                  <FormControl>
+                    <PasswordInput {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
           </div>
           <Button type="submit" disabled={formState.isSubmitting}>
-            Login
+            Sign up
           </Button>
         </form>
       </Form>
@@ -92,4 +100,4 @@ const LoginForm = () => {
   )
 }
 
-export default LoginForm
+export default SignupForm

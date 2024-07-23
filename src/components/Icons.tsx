@@ -1,4 +1,5 @@
 import { IconProps } from '@radix-ui/react-icons/dist/types'
+import FeatherIcon from 'feather-icons-react'
 const DEFAULT_SIZE = 28
 
 export const Icons = {
@@ -67,5 +68,7 @@ export const Icons = {
         fill="#FFFFDF"
       />
     </svg>
-  )
+  ),
+  Eye: () => FeatherIcon({ icon: 'eye', size: DEFAULT_SIZE - 10 }),
+  EyeOff: () => FeatherIcon({ icon: 'eye-off', size: DEFAULT_SIZE - 10 })
 }

@@ -235,6 +235,20 @@
           "maxLength": null
         },
         {
+          "id": "public.User.authProvider",
+          "name": "authProvider",
+          "columnName": "authProvider",
+          "type": "AuthProvider",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": null
+        },
+        {
           "name": "Profile",
           "type": "Profile",
           "isRequired": false,
@@ -394,5 +408,23 @@
       ]
     }
   },
-  "enums": {}
+  "enums": {
+    "AuthProvider": {
+      "schemaName": "public",
+      "values": [
+        {
+          "name": "EMAIL"
+        },
+        {
+          "name": "GOOGLE"
+        },
+        {
+          "name": "INSTAGRAM"
+        },
+        {
+          "name": "TWITTER"
+        }
+      ]
+    }
+  }
 }

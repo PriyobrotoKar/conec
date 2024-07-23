@@ -1,10 +1,11 @@
 import { Icons } from '@/components/Icons'
 import { signIn } from 'next-auth/react'
-
+import Cookies from 'js-cookie'
 import React from 'react'
 
 const OAuthButtons = () => {
   const handleGoogleSignIn = async () => {
+    Cookies.set('isOnboardingFinished', 'false')
     signIn('google', { redirect: false })
   }
 

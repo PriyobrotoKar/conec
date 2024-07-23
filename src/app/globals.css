@@ -11,6 +11,8 @@
 
   --muted-foreground: 69 6% 22%;
 
+  --accent-foreground: 200 100% 37%;
+
   --border: 90 5% 8%;
   --radius: 0.5rem;
 }
@@ -20,6 +22,8 @@
   --foreground: 60 100% 94%;
 
   --muted-foreground: 60 16% 70%;
+
+  --destructive: 0 100% 50%;
 
   --card: 90 5% 8%;
   --border: 60 100% 94%;
@@ -35,5 +39,9 @@
     font-feature-settings:
       'rlig' 1,
       'calt' 1;
+  }
+
+  .link {
+    @apply text-accent-foreground dark:text-primary;
   }
 }

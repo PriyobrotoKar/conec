@@ -1,3 +1,4 @@
+'use server'
 import { signIn } from '@/auth'
 import { signInSchema } from '@/entities/user'
 import { ApiError } from '@/lib/apiError'
@@ -12,12 +13,16 @@ export const signInWithEmail = async ({
   //TODO: check if a user with this email exists or not
   const user = await prisma.user.findUnique({
     where: {
-      email
+      email,
+      authProvider: 'EMAIL'
     }
   })
 
   if (!user) {
-    throw new ApiError('This email address does not exist', 401)
+    throw new ApiError(
+      'This account does not exist. Try signing up instead',
+      401
+    )
   }
   //TODO: if exists then check if the user's password is matching or not
   const isPasswordMatching = await bcrypt.compare(password, user.password)

@@ -105,7 +105,9 @@ describe('login tests', () => {
           const body = await res.json()
           expect(body.code).toBe(401)
           expect(body.status).toBe('error')
-          expect(body.message).toBe('This email address does not exist')
+          expect(body.message).toBe(
+            'This account does not exist. Try signing up instead'
+          )
         }
       })
     })
@@ -140,7 +142,6 @@ describe('login tests', () => {
             })
           })
           const body = await res.json()
-          console.log(body)
           expect(body.code).toBe(200)
           expect(body.status).toBe('success')
           expect(body.data).toBe('Logged in successfully')
