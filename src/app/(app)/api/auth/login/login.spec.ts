@@ -79,11 +79,7 @@ describe('login tests', () => {
 
     beforeEach(async () => {
       await prisma.user.create({
-        data: {
-          username: 'johnDoe',
-          email: 'johnDoe@gmail.com',
-          password: bcrypt.hashSync('thisIsJohn', 10)
-        }
+        data: { ...testUser, authProvider: 'EMAIL' }
       })
     })
 

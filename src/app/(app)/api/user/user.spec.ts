@@ -25,7 +25,8 @@ describe('user tests', () => {
       data: {
         username: 'janeDoe',
         email: 'janeDoe@gmail.com',
-        password: bcrypt.hashSync('thisIsJane', 10)
+        password: bcrypt.hashSync('thisIsJane', 10),
+        authProvider: 'EMAIL'
       }
     })
   })
