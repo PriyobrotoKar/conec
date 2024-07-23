@@ -8,10 +8,10 @@ export default defineConfig({
     setupFiles: ['./vitest.setup.ts'],
     environment: 'jsdom',
     coverage: {
-      include: ['src/app/api/**']
+      include: ['src/app/(app)/api/**']
     },
-    include: ['src/app/api/**/*.spec.ts'],
-    exclude: ['src/app/api/**/*.unit.spec.ts']
+    include: ['src/app/**/*.spec.ts'],
+    exclude: ['src/app/**/*.unit.spec.ts']
   },
   resolve: {
     alias: [{ find: '@', replacement: resolve(__dirname, './src') }]

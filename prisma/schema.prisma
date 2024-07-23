@@ -14,14 +14,22 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum AuthProvider {
+  GOOGLE
+  INSTAGRAM
+  TWITTER
+  EMAIL
+}
+
 model User {
-  id        String   @id @default(uuid())
-  username  String   @unique
-  email     String   @unique
-  password  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
-  profile   Profile?
+  id           String       @id @default(uuid())
+  username     String       @unique
+  email        String       @unique
+  password     String
+  authProvider AuthProvider
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @default(now())
+  profile      Profile?
 }
 
 model Profile {
