@@ -57,7 +57,7 @@ export class AsyncHandler<TParams extends Record<any, string>, T> {
       errMessage = error.issues[0].message
     }
     const statusCode = code || 500
-    const message = errMessage || 'Internal Server Error'
+    const message = errMessage
     const stack = process.env.NODE_ENV !== 'production' ? error.stack : ''
     return NextResponse.json(
       {
