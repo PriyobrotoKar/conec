@@ -67,7 +67,7 @@ describe('login tests', () => {
     vi.mock('@/auth', () => ({
       signIn: vi.fn()
     }))
-    let testUser = {
+    const testUser = {
       username: 'johnDoe',
       email: 'johnDoe@gmail.com',
       password: bcrypt.hashSync('thisIsJohn', 10)

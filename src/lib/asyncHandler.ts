@@ -5,11 +5,6 @@ import { isRedirectError } from 'next/dist/client/components/redirect'
 import { NextRequest, NextResponse } from 'next/server'
 import { ZodError } from 'zod'
 
-type RequestHandler<TParams extends Record<any, string>, T> = (
-  request: NextRequest,
-  context: { params: TParams }
-) => Promise<NextResponse<T>>
-
 type FnType<TParams, T = null> = (
   req: NextRequest,
   context: { params: TParams },
@@ -17,15 +12,11 @@ type FnType<TParams, T = null> = (
 ) => Promise<NextResponse<any>>
 
 export class AsyncHandler<TParams extends Record<any, string>, T> {
-  static instance: RequestHandler<any, any> | undefined
-
   constructor(
     private fn: FnType<TParams, T>,
     private middleware?: () => Promise<T>
   ) {
-    if (!AsyncHandler.instance) {
-      AsyncHandler.instance = this.handleRequest.bind(this)
-    }
+    this.handleRequest = this.handleRequest.bind(this)
   }
 
   private async handleRequest(
@@ -74,18 +65,18 @@ export class AsyncHandler<TParams extends Record<any, string>, T> {
   static authenticated<U extends Record<any, string>>(
     fn: FnType<U, { currentUser: Session }>
   ) {
-    new AsyncHandler(fn, async () => {
+    const asyncHandler = new AsyncHandler(fn, async () => {
       const currentUser = await auth()
       if (!currentUser) {
         throw new AuthError()
       }
       return { currentUser }
     })
-    return AsyncHandler.instance
+    return asyncHandler.handleRequest
   }
 
   static unAuthenticated<U extends Record<any, string>>(fn: FnType<U>) {
-    new AsyncHandler(fn)
-    return AsyncHandler.instance
+    const asyncHandler = new AsyncHandler(fn)
+    return asyncHandler.handleRequest
   }
 }
