@@ -23,7 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${redHatDisplay.variable}`}>
-      <body className="font-red-hat-display text-base transition-colors lg:text-2xl">
+      <body className="relative font-red-hat-display text-base transition-colors lg:text-2xl">
         <ReactQueryProvider>
           <ThemeProvider attribute="class" defaultTheme="system">
             {children}

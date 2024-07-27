@@ -43,11 +43,11 @@ const ClaimUrl = () => {
   ])
 
   return (
-    <main className="space-y-8 md:space-y-14">
-      <h1 className="max-w-xs text-4xl font-bold md:max-w-[30rem] md:text-5xl">
+    <main className="space-y-8 lg:space-y-14">
+      <h1 className="max-w-xs text-4xl font-bold lg:max-w-[30rem] lg:text-5xl">
         A page that tells your story.
       </h1>
-      <div className="relative flex w-fit items-center gap-2 rounded-full border border-border px-5 py-2 md:px-7 md:py-4">
+      <div className="relative flex max-w-xs items-center gap-2 rounded-full border border-border px-5 py-2 md:w-fit md:px-7 md:py-4 lg:max-w-full">
         <div className="text-muted-foreground">conec.me/</div>
         <input
           type="text"
@@ -72,7 +72,7 @@ const ClaimUrl = () => {
           />
         )}
       </div>
-      <div className="flex items-center gap-3 md:gap-6">
+      <div className="flex items-center gap-3 lg:gap-6">
         <Link href={'?signup=open'}>
           <Button>Claim Url</Button>
         </Link>
